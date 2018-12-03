@@ -62,6 +62,7 @@
 (define (sqrt x)
   (fixed-point (lambda (y) (average y (/ x y)))
                1.0))
+
 ;;EXERCISE 1.36
 ;;计算x^x=1000的一个根
 (define (my-fixed-point f first-guess)
@@ -78,8 +79,39 @@
 
 
 ;;EXERCISE 1.37
-;: (cont-frac (lambda (i) 1.0)
-;:            (lambda (i) 1.0)
-;:            k)
+;;计算无穷连分式的递归函数
+(define (recursive-cont-frac n d k)
+  (define (cf i)
+    (if (= i k)
+        (/ (n i) (d i))
+        (/ (n i)
+           (+ (d i) (cf (+ i 1))))))
+  (cf 1))
+;;计算无穷连分式的循环函数
+(define (loop-cont-frac n d k)
+  (define (iter i v)
+    (if (= i 0)
+        v
+        (iter (- i 1) 
+              (/ (n i) (+ (d i) v)))))
+  (iter k 0))
 
+;;EXERCISE 1.38
+;;利用连分式计算e
+(define (e-cf k)
+  (define n (lambda (i) 1.0))
+  (define d (lambda (i)
+    (if (= (remainder i 3) 2)
+        (+ (/ (- i 2) 3) 1.0)
+        1.0)))
+  (loop-cont-frac n d k))
 
+;;EXERCISE 1.39
+;;利用连分式计算tan(x)
+(define (tan-cf x k)
+  (define n (lambda (i) 
+                    (if (= i 1)
+                        x
+                        (- (* x x)))))
+  (define d (lambda (i) (- (* 2 i) 1)))
+  (loop-cont-frac n d k))
