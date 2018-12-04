@@ -65,6 +65,7 @@
 
 ;;EXERCISE 1.36
 ;;计算x^x=1000的一个根
+;;a root of x^x=1000
 (define (my-fixed-point f first-guess)
   (define (close-enough? v1 v2)
     (< (abs (- v1 v2)) tolerance))
@@ -79,7 +80,7 @@
 
 
 ;;EXERCISE 1.37
-;;计算无穷连分式的递归函数
+;;计算无穷连分式的递归过程
 (define (recursive-cont-frac n d k)
   (define (cf i)
     (if (= i k)
