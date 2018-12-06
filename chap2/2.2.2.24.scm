@@ -62,20 +62,49 @@
                       (fringe (cadr x))))))
 
 ;; EXERCISE 2.29
+;; 二叉活动体
 (define (make-mobile left right)
   (list left right))
 
 (define (make-branch length structure)
   (list length structure))
 
+;; 二叉活动体的分支选择过程，分支成分过程
+(define (left-branch x) (car x))
+(define (right-branch x) (cadr x))
+(define (branch-length x) (car x))
+(define (branch-structure x) (cadr x))
 
-;; part d
-(define (make-mobile left right)
-  (cons left right))
+;; 二叉活动体的总重量过程
+(define (total-weight x)
+  (define (branch-weight b)
+    (if (pair? (branch-structure b))
+        (total-weight (branch-structure b))
+        (branch-structure b)))
+  (cond ((null? x) 0)
+        ((not (pair? x)) x)
+        (else (+ (branch-weight (left-branch x))
+              (branch-weight (right-branch x))))))
 
-(define (make-branch length structure)
-  (cons length structure))
+;; 二叉活动体平衡判断过程
+(define (balance? x)
+  (define (branch-moment b)
+    (* (branch-length b)
+       (total-weight (branch-structure b))))
+  (cond ((null? x) error "empty binary mobile")
+        ((not (pair? x)) #t)
+        (else (and (= (branch-moment (left-branch x))
+                      (branch-moment (right-branch x)))
+                   (balance? (branch-structure (left-branch x)))
+                   (balance? (branch-structure (right-branch x)))))))
 
+;; 对二叉树活动体的实现变化后，做出的修正
+;(define (make-mobile left right) (cons left right))
+;(define (make-branch length structure) (cons length structure))
+;(define (left-branch x) (car x))
+;(define (right-branch x) (cdr x))
+;(define (branch-length x) (car x))
+;(define (branch-structure x) (cdr x))
 
 ;; Mapping over trees
 
