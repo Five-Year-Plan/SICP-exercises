@@ -93,10 +93,22 @@
               (map salary
                    (filter programmer? records))))
 
+;; EXERCISE 2.33
+;; 用积累的角度看待各种操作
+(define (square x) (* x x))
+
+;(define (map p sequence)
+;  (accumulate (lambda (i j) (cons (p i) j)) '() sequence))
+;(define (append seq1 seq2)
+;  (accumulate cons seq2 seq1))
+;(define (length sequence)
+;  (accumulate (lambda (i j) (+ j 1)) 0 sequence))
 
 ;; EXERCISE 2.34
+;; 用Horner法则计算多项式和
 (define (horner-eval x coefficient-sequence)
-  (accumulate (lambda (this-coeff higher-terms) ??FILL-THIS-IN??)
+  (accumulate (lambda (this-coeff higher-terms) 
+                (+ this-coeff (* higher-terms x)))
               0
               coefficient-sequence))
 
