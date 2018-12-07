@@ -107,7 +107,7 @@
 
 (define (map proc items)
   (if (null? items)
-      nil
+      '()
       (cons (proc (car items))
             (map proc (cdr items)))))
 
@@ -122,7 +122,17 @@
 
 
 ;; EXERCISE 2.21
-;: (square-list (list 1 2 3 4))
+;; 对表的映射的两种实现
+;; 我们上面定义的map覆盖了scheme原本的map过程
+(define square (lambda (i) (* i i)))
+
+(define (square-list-1 items)
+  (if (null? items)
+      '()
+      (cons (square (car items)) (square-list-1 (cdr items)))))
+
+(define (square-list-2 items)
+  (map square items))
 
 ;; EXERCISE 2.22
 (define (square-list items)
