@@ -115,19 +115,27 @@
 ;: (horner-eval 2 (list 1 3 0 5 0 1))
 
 ;; EXERCISE 2.36
+;; 更高阶的积累抽象
 (define (accumulate-n op init seqs)
   (if (null? (car seqs))
-      nil
-      (cons (accumulate op init ??FILL-THIS-IN??)
-            (accumulate-n op init ??FILL-THIS-IN??))))
+      '()
+      (cons (accumulate op init (map car seqs))
+            (accumulate-n op init (map cdr seqs)))))
 
 ;: (accumulate-n + 0 s)
 
 ;; EXERCISE 2.37
-
+;; 矩阵运算
 (define (dot-product v w)
   (accumulate + 0 (map * v w)))
-
+(define (matrix-*-vector m v)
+  (map (lambda (i) (dot-product i v))  m))
+(define (transpose  mat) ; 不支持向量转置
+  (accumulate-n cons '() mat))
+(define (matrix-*-matrix m n)
+  (let ((cols (transpose n)))
+    (map (lambda (row)
+           (accumulate-n (lambda (i) ()))) m)))
 
 ;; EXERCISE 2.38
 
