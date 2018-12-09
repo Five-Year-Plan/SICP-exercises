@@ -134,8 +134,9 @@
   (accumulate-n cons '() mat))
 (define (matrix-*-matrix m n)
   (let ((cols (transpose n)))
-    (map (lambda (row)
-           (accumulate-n (lambda (i) ()))) m)))
+    (map (lambda (row) 
+           (map (lambda (col) 
+                  (dot-product row col)) cols)) m)))
 
 ;; EXERCISE 2.38
 
@@ -152,6 +153,14 @@
 ;: (fold-right list nil (list 1 2 3))
 ;: (fold-left list nil (list 1 2 3))
 
+;; EXERCISE 2.39
+;; 实现left-fold和right-fold
+(define fold-right accumulate)
+(define (reverse sequence)
+  (fold-left (lambda (x y) (cons y x)) '() sequence))
+;用append省事一些
+(define (reverse sequence)
+  (fold-right (lambda (x y) (append y (list x))) '() sequence))
 
 ;;Nested mappings
 
