@@ -42,7 +42,7 @@
 
 (define (enumerate-interval low high)
   (if (> low high)
-      nil
+      '()
       (cons low (enumerate-interval (+ low 1) high))))
 
 ;: (enumerate-interval 2 7)
@@ -164,7 +164,7 @@
 
 ;;Nested mappings
 
-;: (accumulate append
+;:(accumulate append
 ;:             nil
 ;:             (map (lambda (i)
 ;:                    (map (lambda (j) (list i j))
@@ -202,8 +202,18 @@
   (filter (lambda (x) (not (= x item)))
           sequence))
 
+;; EXERCISE 2.40
+;; 暴露了太多细节，应该把p83的代码定义为unique-pairs，提高可读性
 
 ;; EXERCISE 2.42
+;; k皇后问题，wish thinking
+(define empty-board '())
+
+(define (safe? k positions)
+  ()
+
+(define adjoin-position)
+
 (define (queens board-size)
   (define (queen-cols k)
     (if (= k 0)
